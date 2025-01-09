@@ -1,0 +1,131 @@
+/* General body styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    color: #000;
+}
+
+/* Reviews container styling */
+.gprc-reviews-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    gap: 20px; /* Space between reviews */
+    padding: 20px;
+}
+
+/* Review card styling */
+.gprc-review-card {
+    background-color: #fff; /* White background for the card */
+    color: #000; /* Black text */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Light shadow for a clean look */
+    padding: 20px;
+    transition: transform 0.3s ease; /* Smooth hover effect */
+}
+
+/* Hover effect for review card */
+.gprc-review-card:hover {
+    transform: translateY(-10px); /* Slight lift effect */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
+}
+
+/* Review header (author info) */
+.gprc-review-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+/* Author photo styling */
+.gprc-author-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* Circular photo */
+    margin-right: 15px;
+}
+
+/* Author name and profile link */
+.gprc-author-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.gprc-author-info h3 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.gprc-author-info p {
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.gprc-author-info a {
+    color: #000;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+/* Review body styling */
+.gprc-review-body p {
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* Strong text styling */
+.gprc-review-body strong {
+    font-weight: bold;
+}
+
+/* No reviews message */
+.gprc-no-reviews {
+    text-align: center;
+    padding: 50px;
+    font-size: 16px;
+    color: #000;
+}
+
+.gprc-no-reviews h5 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.gprc-no-reviews p {
+    font-size: 14px;
+}
+
+.toast {
+    background-color: #fff !important;  /* White background */
+    color: #000 !important;  /* Black text */
+    white-space: nowrap;  /* Prevent text from wrapping */
+    text-overflow: ellipsis;  /* Truncate text with ellipsis if too long */
+    position: relative;  /* Allow positioning of the progress bar */
+    padding-right: 40px;  /* Space for the close button */
+}
+.toast-close-button {
+    color: #000 !important;  /* Black close button */
+    font-size: 20px !important;  /* Larger close button */
+    font-weight: bold;!important;
+    padding: 10px;  /* Increase padding for easier clicking */
+    opacity: 1 !important;  /* Ensure button is visible */
+    display: block !important;  /* Ensure the close button is displayed */
+    position: absolute;
+}
+.toast-progress {
+    position: absolute;  /* Position the progress bar at the bottom */
+    bottom: 0;
+    left: 0;
+    width: 0%;  /* Start with no width */
+    height: 3px;  /* Set progress bar height */
+    background-color: #000;  /* Black color for the progress bar */
+    transition: width 5s linear;  /* Animate the progress bar width */
+}
+
+/* Ensure progress bar grows smoothly */
+.toast.show .toast-progress {
+    width: 100% !important;  /* Make it fill up during the timeout duration */
+}
+
+
+

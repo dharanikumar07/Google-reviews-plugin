@@ -1,0 +1,16 @@
+{
+  "name": "google-place-reviews/google-place-reviews",
+  "description": "This plugin to get a google place reviews",
+  "type": "project",
+  "license": "GPL2 or latest",
+  "require": {
+    "php": "7.4.*",
+    "ext-json": "*",
+    "yahnis-elsts/plugin-update-checker": "^v5.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "GPRC\\": ""
+    }
+  }
+}
