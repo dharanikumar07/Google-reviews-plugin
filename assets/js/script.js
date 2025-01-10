@@ -1,4 +1,27 @@
 jQuery(document).ready(function ($) {
+    function toastMessage(type, text) {
+        let newToast = document.createElement('div');
+        let icon = '';
+        if (type === 'success') {
+            icon = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"\n' +
+                '         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check">\n' +
+                '        <path d="M20 6 9 17l-5-5"/>\n' +
+                '    </svg>'
+        } else if (type === 'error') {
+            icon = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-octagon-alert"><path d="M12 16h.01"/><path d="M12 8v4"/><path d="M15.312 2a2 2 0 0 1 1.414.586l4.688 4.688A2 2 0 0 1 22 8.688v6.624a2 2 0 0 1-.586 1.414l-4.688 4.688a2 2 0 0 1-1.414.586H8.688a2 2 0 0 1-1.414-.586l-4.688-4.688A2 2 0 0 1 2 15.312V8.688a2 2 0 0 1 .586-1.414l4.688-4.688A2 2 0 0 1 8.688 2z"/></svg>';
+        }
+        newToast.classList.add('edwm-toast', type);
+        newToast.innerHTML = `
+        <div class='edwm-toast-icon edwm-toast-icon-${type}'>${icon}</div>
+        <div class="edwm-toast-content">
+            <span class="edwm-toast-msg">${text}</span>
+        </div>
+        <i class="edpw edpw-close"  style="font-size:17px;color:#666;cursor: pointer" onclick="(this.parentElement).remove()"></i>`;
+        document.querySelector('.yuko-notification').appendChild(newToast);
+        newToast.timeOut = setTimeout(function () {
+            newToast.remove();
+        }, 100000);
+    }
     $('#gpr-search-btn').on('click', function () {
         const query = $('#gpr-place-search').val();
         if (!query) {
@@ -19,15 +42,15 @@ jQuery(document).ready(function ($) {
             },
             success: function (response) {
                 if (response.success) {
-                    toastr.success('Place reviews fetched successfully!');
+                    toastMessage('success','Place reviews fetched successfully!')
                     $('#gpr-result').html(response.data.content);
                 } else {
-                    toastr.error(response.data.message);
+                    toastMessage('error',response.data.message)
                     $('#gpr-result').html(`<span style="color: red;">${response.data.message}</span>`);
                 }
             },
             error: function () {
-                toastr.error('Failed to fetch Place ID and reviews.');
+                toastMessage('error','Failed to fetch Place ID and reviews.')
                 $('#gpr-result').html('<span style="color: red;">Failed to fetch Place ID and reviews.</span>');
             },
         });
@@ -38,7 +61,7 @@ jQuery(document).ready(function ($) {
         e.preventDefault(); // Prevent form submission
         const apiKey = $('#gpr-api-key').val();
         if (!apiKey) {
-            toastr.error('Please enter an API key.');
+            toastMessage('error','Please enter an API key.')
             return;
         }
 
@@ -55,14 +78,14 @@ jQuery(document).ready(function ($) {
             },
             success: function (response) {
                 if (response.success) {
-                    toastr.success(response.data.message);
+                    toastMessage('success',response.data.message)
                     setTimeout(() => location.reload(), 1000);
                 } else {
-                    toastr.error(response.data.message);
+                    toastMessage('error',response.data.message)
                 }
             },
             error: function () {
-                toastr.error('Failed to save API key. Please try again.');
+                toastMessage('error','Failed to save API key. Please try again.')
             },
         });
     });
@@ -86,11 +109,11 @@ jQuery(document).ready(function ($) {
                     );
                     setTimeout(() => location.reload(), 1000);
                 } else {
-                    toastr.error(response.data.message);
+                    toastMessage('error',response.data.message)
                 }
             },
             error: function () {
-                toastr.error('Failed to save API key. Please try again.');
+                toastMessage('error','Failed to save API key. Please try again.')
             },
         });
     });

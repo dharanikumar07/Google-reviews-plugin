@@ -1,45 +1,44 @@
 <?php
 $update = get_option('gpr_update_api_key');
 ?>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<div class="yuko-notification"></div>
+<div class="wrap">
+    <h1 class="gpr-heading"><?php echo esc_html__('Google Place Reviews', 'yuko'); ?></h1>
+    <p class="gpr-subheading"><?php echo esc_html__('Please follow these steps to set up your Google Places API key:', 'yuko'); ?></p>
 
-<div class="wrap p-3">
-    <h1 class="gpr-heading text-black text-4xl font-bold mb-4">Google Place Reviews</h1>
-    <p class="gpr-subheading text-black text-sm mb-6">Please follow these steps to set up your Google Places API key:</p>
-
-    <form id="gpr-api-key-form" method="POST" class="gpr-form flex items-center space-x-4 mb-8">
+    <form id="gpr-api-key-form" method="POST" class="gpr-form">
         <input
-            type="text"
-            id="gpr-api-key"
-            class="gpr-input-field flex-grow h-9 px-4 border border-black rounded-md text-black focus:outline-none focus:ring-2 focus:ring-gray-400"
-            placeholder="Enter your API key..."
+                type="text"
+                id="gpr-api-key"
+                class="gpr-input-field"
+                placeholder="<?php echo esc_attr__('Enter your API key...', 'yuko'); ?>"
         />
         <?php if ($update === 'update') { ?>
             <button
-                id="gpr-api-key-submit"
-                class="h-9 px-6 border-2 border-black text-black bg-white rounded-md hover:bg-black hover:text-white transition-all duration-300"
+                    id="gpr-api-key-submit"
+                    class="gpr-submit-btn"
             >
-                Update API Key
+                <?php echo esc_html__('Update API Key', 'yuko'); ?>
             </button>
         <?php } else { ?>
             <button
-                id="gpr-api-key-submit"
-                class="h-9 px-6 border-2 border-black text-black bg-white rounded-md hover:bg-black hover:text-white transition-all duration-300"
+                    id="gpr-api-key-submit"
+                    class="gpr-submit-btn"
             >
-                Save API Key
+                <?php echo esc_html__('Save API Key', 'yuko'); ?>
             </button>
         <?php } ?>
     </form>
 
-    <ol class="gpr-steps list-decimal pl-5 text-gray-800 text-base leading-relaxed space-y-4">
-        <li>Visit <a href="https://console.cloud.google.com/" target="_blank" class="text-blue-500 underline">Google Cloud Console</a> and sign in.</li>
-        <li>Click the <b>Project dropdown</b> in the top-left corner and select <b>New Project</b>. Enter a name for your project and click <b>Create</b>.</li>
-        <li>Search for <b>Places API</b> in the search bar, click on it, and then click <b>Enable</b> to activate the API for your project.</li>
-        <li>Go to <b>APIs & Services > Credentials</b>, click <b>Create Credentials</b>, and select <b>API Key</b>. Your API Key will be generated.</li>
-        <li>Click <b>Restrict Key</b>, set <b>HTTP Referrers</b> for your domain, select <b>Places API</b> under <b>API Restrictions</b>, and click <b>Save</b>.</li>
+    <ol class="gpr-steps">
+        <li><?php echo esc_html__('Visit', 'yuko'); ?> <a href="https://console.cloud.google.com/" target="_blank" class="gpr-link"><?php echo esc_html__('Google Cloud Console', 'yuko'); ?></a> <?php echo esc_html__('and sign in.', 'yuko'); ?></li>
+        <li><?php echo esc_html__('Click the', 'yuko'); ?> <b><?php echo esc_html__('Project dropdown', 'yuko'); ?></b> <?php echo esc_html__('in the top-left corner and select', 'yuko'); ?> <b><?php echo esc_html__('New Project', 'yuko'); ?></b>. <?php echo esc_html__('Enter a name for your project and click', 'yuko'); ?> <b><?php echo esc_html__('Create', 'yuko'); ?></b>.</li>
+        <li><?php echo esc_html__('Search for', 'yuko'); ?> <b><?php echo esc_html__('Places API', 'yuko'); ?></b> <?php echo esc_html__('in the search bar, click on it, and then click', 'yuko'); ?> <b><?php echo esc_html__('Enable', 'yuko'); ?></b> <?php echo esc_html__('to activate the API for your project.', 'yuko'); ?></li>
+        <li><?php echo esc_html__('Go to', 'yuko'); ?> <b><?php echo esc_html__('APIs & Services > Credentials', 'yuko'); ?></b>, <?php echo esc_html__('click', 'yuko'); ?> <b><?php echo esc_html__('Create Credentials', 'yuko'); ?></b>, <?php echo esc_html__('and select', 'yuko'); ?> <b><?php echo esc_html__('API Key', 'yuko'); ?></b>. <?php echo esc_html__('Your API Key will be generated.', 'yuko'); ?></li>
+        <li><?php echo esc_html__('Click', 'yuko'); ?> <b><?php echo esc_html__('Restrict Key', 'yuko'); ?></b>, <?php echo esc_html__('set', 'yuko'); ?> <b><?php echo esc_html__('HTTP Referrers', 'yuko'); ?></b> <?php echo esc_html__('for your domain, select', 'yuko'); ?> <b><?php echo esc_html__('Places API', 'yuko'); ?></b> <?php echo esc_html__('under', 'yuko'); ?> <b><?php echo esc_html__('API Restrictions', 'yuko'); ?></b>, <?php echo esc_html__('and click', 'yuko'); ?> <b><?php echo esc_html__('Save', 'yuko'); ?></b>.</li>
     </ol>
 
-    <p class="gpr-subheading text-black text-sm mt-8">After completing the steps, enter your API key above:</p>
+    <p class="gpr-subheading"><?php echo esc_html__('After completing the steps, enter your API key above:', 'yuko'); ?></p>
 
-    <div id="gpr-api-status" class="gpr-status mt-4 text-gray-700 text-center"></div>
+    <div id="gpr-api-status" class="gpr-status"></div>
 </div>

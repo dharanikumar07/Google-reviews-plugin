@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name:          Google Place Reviews
+ * Plugin Name:          Yuko
  * Description:          Fetch Google Place reviews by searching for a place.
  * Version:              1.0.0
  * Requires PHP:         7.4
- * Author:               Dharanikumar
- * Text Domain:          cr-google-place-reviews
+ * Author:               Flycart
+ * Text Domain:          yuko
  * Domain Path:          /i18n/languages
  * License:              GPL v3 or later
  * License URI:          https://www.gnu.org/licenses/gpl-3.0.html

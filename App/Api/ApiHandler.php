@@ -1,15 +1,21 @@
 <?php
-
 namespace GPRC\App\Api;
 
 defined('ABSPATH') || exit;
+
 class ApiHandler
 {
-
+    /**
+     * Fetch Google Place Reviews for a given place ID.
+     *
+     * @param string $place_id The Google Place ID to fetch reviews for.
+     *
+     * @return void
+     */
     public static function gprFetchReviews($place_id)
     {
         $api_url = "https://maps.googleapis.com/maps/api/place/details/json";
-        $api_key= get_option('gpr_api_key',true);
+        $api_key = get_option('gpr_api_key', true);
         $response = wp_remote_get(
             add_query_arg(
                 [
@@ -21,14 +27,13 @@ class ApiHandler
         );
 
         if (is_wp_error($response)) {
-            return wp_send_json_error(['message' => 'Failed to fetch reviews.']);
+            return wp_send_json_error(['message' => __('Failed to fetch reviews.', 'yuko')]);
         }
 
         $body = wp_remote_retrieve_body($response);
         $data = json_decode($body, true);
 
         if (isset($data['result'])) {
-
             $reviews = [
                 'place_id' => $data['result']['place_id'] ?? $place_id,
                 'rating' => $data['result']['rating'] ?? 0,
@@ -37,17 +42,25 @@ class ApiHandler
             ];
             self::saveReviewsToDb($reviews);
         } else {
-            return wp_send_json_error(['message' => 'Reviews not found.']);
+            return wp_send_json_error(['message' => __('Reviews not found.', 'yuko')]);
         }
     }
 
+    /**
+     * Fetch the Place ID based on the search query.
+     *
+     * @return void
+     */
     public static function gprFetchPlaceId()
     {
         check_ajax_referer('gpr_nonce', 'security');
 
-        $query = sanitize_text_field($_POST['query']);
+        if (isset($_POST['query'])) {
+            $query = sanitize_text_field(wp_unslash($_POST['query']));
+        }
+
         if (empty($query)) {
-            wp_send_json_error(['message' => 'Search query cannot be empty.']);
+            wp_send_json_error(['message' => __('Search query cannot be empty.', 'yuko')]);
             return;
         }
 
@@ -55,7 +68,7 @@ class ApiHandler
 
         // API Request to fetch Place ID
         $response = wp_remote_post($api_url, [
-            'body' => json_encode(['textQuery' => $query]),
+            'body' => wp_json_encode(['textQuery' => $query]),
             'headers' => [
                 'Content-Type' => 'application/json',
                 'X-Goog-Api-Key' => 'AIzaSyC0TrePd3JavfAT_vKC8oJleFwITlT6eAw', // Replace with your Google API Key
@@ -64,7 +77,7 @@ class ApiHandler
         ]);
 
         if (is_wp_error($response)) {
-            wp_send_json_error(['message' => 'API request failed.']);
+            wp_send_json_error(['message' => __('API request failed.', 'yuko')]);
             return;
         }
 
@@ -75,12 +88,19 @@ class ApiHandler
         if ($place_id) {
             return self::gprFetchReviews($place_id);
         } else {
-            wp_send_json_error(['message' => 'Place not found.']);
+            wp_send_json_error(['message' => __('Place not found.', 'yuko')]);
         }
     }
 
-    public static function saveReviewsToDb($reviews) {
-
+    /**
+     * Save the fetched reviews to the WordPress database.
+     *
+     * @param array $reviews The reviews data to be saved.
+     *
+     * @return void
+     */
+    public static function saveReviewsToDb($reviews)
+    {
         $serialized_reviews = maybe_serialize([
             'place_id' => $reviews['place_id'],
             'reviews' => $reviews['reviews'],
@@ -93,6 +113,12 @@ class ApiHandler
 
         self::fetchViews($reviews);
     }
+
+    /**
+     * Retrieve the reviews data stored in the database.
+     *
+     * @return array The list of reviews or an empty array if no reviews are found.
+     */
     public static function getReviewsData()
     {
         $serialized_reviews = get_option('latest_gpr_search');
@@ -108,6 +134,13 @@ class ApiHandler
         return [];
     }
 
+    /**
+     * Fetch and render the reviews into HTML.
+     *
+     * @param array $reviews The reviews data to be rendered.
+     *
+     * @return void
+     */
     public static function fetchViews($reviews)
     {
         if (!empty($reviews)) {
@@ -116,13 +149,13 @@ class ApiHandler
             $content = ob_get_clean();
 
             if (empty($content)) {
-                echo 'No content captured';
+                echo esc_html__('No content captured', 'yuko');
             }
 
             return wp_send_json_success(['content' => $content]);
         } else {
-            echo '<p>' . esc_html__('No reviews available.', 'your-textdomain') . '</p>';
+            echo '<p>' . esc_html__('No reviews available.', 'yuko') . '</p>';
         }
     }
-
 }
+
