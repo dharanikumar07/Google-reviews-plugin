@@ -33,7 +33,15 @@ if (empty($reviews)) {
         <?php foreach ($reviews as $review) { ?>
             <div class="gprc-review-card">
                 <div class="gprc-review-header">
-                    <img src="<?php echo esc_url($review['profile_photo_url']); ?>" alt="<?php echo esc_attr($review['author_name']); ?>" class="gprc-author-photo">
+                    <?php
+                    $image_id = attachment_url_to_postid($review['profile_photo_url']);
+                    if ($image_id) {
+                        echo wp_get_attachment_image($image_id, 'thumbnail', false, ['class' => 'gprc-author-photo', 'alt' => esc_attr($review['author_name'])]);
+                    } else {
+                        // Fallback if not an attachment or external URL
+                        echo '<img src="' . esc_url($review['profile_photo_url']) . '" alt="' . esc_attr($review['author_name']) . '" class="gprc-author-photo">';
+                    }
+                    ?>
                     <div class="gprc-author-info">
                         <h3><?php echo esc_html($review['author_name']); ?></h3>
                         <p><a href="<?php echo esc_url($review['author_url']); ?>" target="_blank"><?php echo esc_html__('Visit Profile', 'yuko'); ?></a></p>
