@@ -1,7 +1,6 @@
-=== Yuko ===
-Contributors: flycart
-Donate link: https://www.flycart.org/
-Tags: woocommerce, yuko, reviews
+=== Google reviews plugin ===
+Contributors: dharani
+Tags: woocommerce, google, reviews
 Requires at least: 5.9
 Tested up to: 6.7
 WC requires at least: 7.0
